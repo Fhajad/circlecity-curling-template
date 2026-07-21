@@ -12,10 +12,15 @@ A one-page runbook for putting this template live and keeping it healthy.
 
 ## 2. Install / update the template
 
-**On this site, a plain package upload fails with "Another template is already using the
-named folder"** (a site-level installer quirk — the extension record never matches, even
-after a clean reinstall). Until that's fixed at the database level or an update server is
-set up, updating = uninstall → reinstall. The full procedure, lossless-ish:
+**As of v1.3.6, updates should be one click:** *Extensions → Update → Find Updates* — if
+"Circle City Curling Template" shows an update available, select it and click **Update**.
+This uses Joomla's own update-server mechanism (github.com/Fhajad/circlecity-curling-template)
+and does **not** wipe your Options. Try this first on every future version.
+
+**If that doesn't show an update, or a fresh v1.3.6 install still throws "Another template
+is already using the named folder"** — this site's installer has a separate, confirmed
+record-matching bug that even a clean reinstall didn't fix (see project notes). Fall back to
+uninstall → reinstall, lossless-ish:
 
 1. [ ] **Jot down your Options** (*Templates → Styles → cccc2026 → Options*): logo path(s),
    any colour changes, tagline/copyright text, login URL, Display toggles. A screenshot of
