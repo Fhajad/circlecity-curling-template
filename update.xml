@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+	<update>
+		<name>cccc2026</name>
+		<description>Circle City Curling — front-end template.</description>
+		<element>cccc2026</element>
+		<type>template</type>
+		<client>site</client>
+		<version>1.3.6</version>
+		<infourl title="Circle City Curling Template">https://github.com/Fhajad/circlecity-curling-template</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/Fhajad/circlecity-curling-template/releases/download/v1.3.6/cccc2026-template-1.3.6.zip</downloadurl>
+		</downloads>
+		<targetplatform name="joomla" version="3.[0-9]+"/>
+	</update>
+</updates>

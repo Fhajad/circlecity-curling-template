@@ -1,0 +1,641 @@
+/* ============================================================
+   Circle City Curling — site template
+   Ported from the approved homepage mockup.
+   ============================================================ */
+
+/* Self-hosted fonts (no Google Fonts CDN dependency). Latin subset, woff2. */
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 400; font-display: swap; src: url('../fonts/barlow-v13-latin-regular.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 500; font-display: swap; src: url('../fonts/barlow-v13-latin-500.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 600; font-display: swap; src: url('../fonts/barlow-v13-latin-600.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 700; font-display: swap; src: url('../fonts/barlow-v13-latin-700.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow Semi Condensed'; font-style: normal; font-weight: 500; font-display: swap; src: url('../fonts/barlow-semi-condensed-v16-latin-500.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow Semi Condensed'; font-style: normal; font-weight: 600; font-display: swap; src: url('../fonts/barlow-semi-condensed-v16-latin-600.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow Semi Condensed'; font-style: normal; font-weight: 700; font-display: swap; src: url('../fonts/barlow-semi-condensed-v16-latin-700.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow Semi Condensed'; font-style: normal; font-weight: 800; font-display: swap; src: url('../fonts/barlow-semi-condensed-v16-latin-800.woff2') format('woff2'); }
+
+:root {
+	--cc-red: #8b2424;
+	--cc-red-dark: #731c1c;
+	--cc-blue: #4e7096;
+	--cc-blue-dark: #3d5a78;
+	--cc-ink: #2b2b2b;
+	--cc-muted: #5a5a5a;
+	--cc-line: #e5e1da;
+	--cc-line-2: #ece8e1;
+	--cc-paper: #f5f3f0;
+	--cc-bg: #faf8f4;
+	--cc-card: #ffffff;
+	--cc-meta: #767676;
+	--cc-gold: #f4c542;
+	/* dark-mode-only tokens (unused in light) */
+	--cc-nav-bg: #4e7096;
+	--cc-footer-bg: #3d5a78;
+}
+
+/* The site ships a light brand theme and an automatic dark theme that follows
+   the visitor's device setting (prefers-color-scheme: dark). The dark theme is
+   defined at the very bottom of this file: it only re-maps the surface tokens
+   (backgrounds / text / lines) and lightens links for contrast — the brand red
+   and blue (set in the template Options) carry through both themes. */
+
+* { box-sizing: border-box; }
+
+body.cc-site {
+	margin: 0;
+	font-family: 'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
+	color: var(--cc-ink);
+	background: var(--cc-bg);
+	-webkit-font-smoothing: antialiased;
+	min-height: 100vh;
+}
+
+.cc-site a { color: inherit; }
+.cc-site img { max-width: 100%; height: auto; }
+.cc-site h1, .cc-site h2, .cc-site h3 { font-family: 'Barlow Semi Condensed', sans-serif; }
+
+.cc-wrap { max-width: 1180px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
+
+/* Club roundel logo (CSS-drawn, no image needed) */
+.cc-logo {
+	width: 54px; height: 54px; border-radius: 50%; flex: none; display: block;
+	background: radial-gradient(circle, #8b2424 0 18%, #fff 18% 34%, #4e7096 34% 50%, #fff 50% 66%, #4e7096 66% 100%);
+	box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+}
+.cc-logo-sm { width: 42px; height: 42px; }
+
+/* Uploaded logo image (Options -> Branding). Sized to the roundel's box. */
+.cc-logo-img { height: 54px; width: auto; max-height: 54px; flex: none; display: block; }
+.cc-logo-img.cc-logo-sm { height: 42px; max-height: 42px; width: auto; }
+
+/* ---------- Header ---------- */
+.cc-header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 18px; padding-bottom: 18px; }
+.cc-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.cc-brand-text { display: flex; flex-direction: column; line-height: 1; }
+.cc-brand-name { font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 800; font-size: 27px; letter-spacing: .5px; color: var(--cc-blue); text-transform: uppercase; }
+.cc-brand-tag { font-size: 13.5px; color: var(--cc-meta); margin-top: 5px; letter-spacing: .3px; }
+.cc-login {
+	display: inline-flex; align-items: center; gap: 8px; background: var(--cc-red); color: #fff;
+	text-decoration: none; font-weight: 600; font-size: 14.5px; padding: 11px 20px; border-radius: 6px;
+	letter-spacing: .3px; box-shadow: 0 1px 2px rgba(0,0,0,0.12); white-space: nowrap; transition: background .2s;
+}
+.cc-login:hover { background: var(--cc-red-dark); }
+.cc-login, .cc-login:link, .cc-login:visited, .cc-login:hover { color: #fff !important; }
+.cc-login svg { color: #fff; }
+
+/* ---------- Nav (auto-built multi-level mega menu) ---------- */
+.cc-nav { background: var(--cc-blue); border-top: 3px solid var(--cc-red); }
+.cc-nav .cc-wrap { padding-left: 24px; padding-right: 24px; position: relative; }
+.cc-nav ul.menu { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; position: relative; }
+.cc-nav ul.menu li { margin: 0; position: relative; }
+.cc-nav ul.menu > li > a,
+.cc-nav ul.menu > li > span {
+	display: block; color: #fff; text-decoration: none; font-family: 'Barlow Semi Condensed', sans-serif;
+	font-weight: 600; font-size: 16px; letter-spacing: .6px; text-transform: uppercase; padding: 15px 20px; transition: background .15s; cursor: default;
+}
+.cc-nav ul.menu > li > a { cursor: pointer; }
+.cc-nav ul.menu > li:hover > a { background: var(--cc-blue-dark); }
+.cc-nav ul.menu > li.current > a,
+.cc-nav ul.menu > li.active > a { background: var(--cc-blue-dark); box-shadow: inset 0 -3px 0 var(--cc-gold); }
+
+/* simple dropdown (one level of children) */
+.cc-nav ul.menu ul.cc-submenu {
+	position: absolute; top: 100%; left: 0; min-width: 230px; list-style: none; margin: 0; padding: 6px 0;
+	background: var(--cc-blue-dark); box-shadow: 0 12px 30px rgba(0,0,0,.28); z-index: 60; display: none;
+}
+.cc-nav ul.menu li:hover > ul.cc-submenu { display: block; }
+.cc-nav ul.menu ul.cc-submenu li > a,
+.cc-nav ul.menu ul.cc-submenu li > span {
+	display: block; color: #fff; padding: 11px 18px; font-family: 'Barlow', sans-serif; font-weight: 500;
+	font-size: 14px; letter-spacing: .3px; text-transform: none; white-space: nowrap; box-shadow: none; text-decoration: none;
+}
+.cc-nav ul.menu ul.cc-submenu li > a:hover { background: var(--cc-blue); }
+
+/* MEGA dropdown (children that have their own children -> columns) */
+.cc-nav ul.menu li.mega > .cc-mega {
+	position: absolute; top: 100%; left: 0; z-index: 60; display: none; width: 720px; max-width: calc(100vw - 48px);
+	background: var(--cc-blue-dark); color: #fff;
+	border-radius: 0 0 6px 6px; box-shadow: 0 12px 30px rgba(0,0,0,.28);
+}
+.cc-nav ul.menu li.mega:hover > .cc-mega { display: block; }
+.cc-nav ul.menu .cc-mega-inner { display: flex; flex-wrap: wrap; align-items: flex-start; padding: 8px 6px; max-width: 100%; }
+.cc-nav ul.menu .cc-mega-col { min-width: 190px; max-width: 260px; padding: 10px 18px; }
+.cc-nav ul.menu .cc-mega-col + .cc-mega-col { border-left: 1px solid rgba(255,255,255,.14); }
+.cc-nav ul.menu .cc-mega-h {
+	display: block; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 700; font-size: 12px;
+	letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,.55); text-decoration: none;
+	padding: 2px 0 9px; margin: 0 0 4px; border-bottom: 1px solid rgba(255,255,255,.16); white-space: nowrap;
+}
+.cc-nav ul.menu a.cc-mega-h:hover { color: #fff; }
+.cc-nav ul.menu .cc-mega-col ul {
+	position: static; display: block; list-style: none; margin: 0; padding: 0; background: none; box-shadow: none; min-width: 0;
+}
+.cc-nav ul.menu .cc-mega-col ul li { position: static; }
+.cc-nav ul.menu .cc-mega-col ul li > a,
+.cc-nav ul.menu .cc-mega-col ul li > span {
+	display: block; padding: 7px 12px; margin: 0 -12px; border-radius: 4px; font-family: 'Barlow', sans-serif; font-weight: 500; font-size: 14.5px;
+	letter-spacing: 0; text-transform: none; color: #fff; text-decoration: none; box-shadow: none; white-space: nowrap;
+}
+.cc-nav ul.menu .cc-mega-col ul li > a:hover { background: var(--cc-blue); color: #fff; }
+
+/* anchor dropdowns to the right edge for the last couple of top items so they don't overflow */
+.cc-nav ul.menu > li:nth-last-child(-n+2) > ul.cc-submenu,
+.cc-nav ul.menu > li.mega:nth-last-child(-n+2) > .cc-mega { left: auto; right: 0; }
+
+/* ---------- Hero scroller ---------- */
+.cc-hero { position: relative; width: 100%; height: 520px; overflow: hidden; background: #2b3a4a; }
+.cc-slide { position: absolute; inset: 0; opacity: 0; z-index: 1; transition: opacity .8s ease; pointer-events: none; }
+.cc-slide.is-active { opacity: 1; z-index: 2; pointer-events: auto; }
+.cc-slide-img { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.cc-slide-img--empty { background: linear-gradient(135deg, #3d5a78, #2b3a4a); }
+.cc-slide-scrim { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,30,42,.82) 0%, rgba(20,30,42,.45) 50%, rgba(20,30,42,.2) 100%); }
+.cc-slide-inner { position: absolute; inset: 0; display: flex; align-items: center; }
+.cc-slide-copy { max-width: 560px; }
+.cc-badge {
+	display: inline-block; background: var(--cc-red); color: #fff; font-family: 'Barlow Semi Condensed', sans-serif;
+	font-weight: 700; font-size: 13.5px; letter-spacing: 1.2px; text-transform: uppercase; padding: 6px 13px;
+	border-radius: 4px; margin-bottom: 18px;
+}
+.cc-slide-copy h1, .cc-slide-copy h2 { font-weight: 800; font-size: 54px; line-height: 1.04; color: #fff; margin: 0 0 16px; text-shadow: 0 2px 12px rgba(0,0,0,.35); }
+.cc-slide-blurb, .cc-slide-blurb p { font-size: 18px; line-height: 1.5; color: #e8ecf1; margin: 0 0 26px; max-width: 460px; }
+.cc-btn {
+	display: inline-flex; align-items: center; gap: 10px; background: var(--cc-red); color: #fff; text-decoration: none;
+	font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: .5px;
+	text-transform: uppercase; padding: 15px 28px; border-radius: 7px; box-shadow: 0 4px 14px rgba(0,0,0,.3); transition: background .2s;
+}
+.cc-btn:hover { background: var(--cc-red-dark); }
+.cc-btn span { font-size: 20px; }
+
+.cc-arrow {
+	position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 46px; height: 46px;
+	border-radius: 50%; border: none; background: rgba(255,255,255,.16); color: #fff; font-size: 22px; cursor: pointer;
+	display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); transition: background .2s;
+}
+.cc-arrow:hover { background: rgba(255,255,255,.32); }
+.cc-arrow--prev { left: 18px; }
+.cc-arrow--next { right: 18px; }
+.cc-dots { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 5; display: flex; gap: 9px; align-items: center; }
+.cc-dot { width: 10px; height: 10px; border-radius: 5px; border: none; background: rgba(255,255,255,.5); cursor: pointer; transition: all .3s ease; padding: 0; }
+.cc-dot.is-active { width: 28px; background: #fff; }
+
+/* ---------- Promo cards ---------- */
+.cc-promo { padding-top: 56px; padding-bottom: 40px; }
+.cc-promo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.cc-card {
+	border: 1px solid var(--cc-line); border-radius: 10px; overflow: hidden; background: var(--cc-card);
+	display: flex; flex-direction: column; box-shadow: 0 1px 3px rgba(0,0,0,.05); transition: box-shadow .2s, transform .2s;
+}
+.cc-card:hover { box-shadow: 0 10px 28px rgba(0,0,0,.12); transform: translateY(-3px); }
+.cc-card-media { position: relative; height: 158px; background: linear-gradient(135deg, #5a7794, #45627f); }
+.cc-card-icon {
+	position: absolute; left: 16px; bottom: -22px; width: 46px; height: 46px; border-radius: 50%;
+	background: var(--cc-blue); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.cc-card-body { padding: 34px 22px 24px; display: flex; flex-direction: column; flex: 1; }
+.cc-card-body h3 { font-weight: 700; font-size: 23px; color: var(--cc-ink); margin: 0 0 9px; }
+.cc-card-body p { font-size: 15px; line-height: 1.55; color: var(--cc-muted); margin: 0 0 18px; flex: 1; }
+.cc-card-link { color: var(--cc-red); text-decoration: none; font-weight: 700; font-size: 14.5px; letter-spacing: .3px; display: inline-flex; align-items: center; gap: 6px; transition: gap .15s; }
+.cc-card-link:hover { gap: 10px; }
+
+/* ---------- News ---------- */
+.cc-news { background: var(--cc-paper); border-top: 1px solid var(--cc-line); padding: 54px 0; }
+.cc-news-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 28px; gap: 16px; }
+.cc-eyebrow { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cc-red); margin-bottom: 6px; }
+.cc-news-head h2 { font-weight: 800; font-size: 34px; color: var(--cc-ink); margin: 0; }
+.cc-news-all { color: var(--cc-blue); text-decoration: none; font-weight: 700; font-size: 14.5px; white-space: nowrap; }
+.cc-news-all:hover { color: var(--cc-blue-dark); }
+.cc-news-list { display: flex; flex-direction: column; background: var(--cc-card); border: 1px solid var(--cc-line); border-radius: 10px; overflow: hidden; }
+.cc-news-item { display: flex; gap: 22px; padding: 22px 26px; text-decoration: none; border-bottom: 1px solid var(--cc-line-2); transition: background .15s; }
+.cc-news-item:last-child { border-bottom: none; }
+.cc-news-item:hover { background: var(--cc-paper); }
+.cc-date { flex: none; width: 62px; text-align: center; border-right: 2px solid var(--cc-line); padding-right: 18px; }
+.cc-day { font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 800; font-size: 30px; color: var(--cc-blue); line-height: 1; display: block; }
+.cc-mon { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--cc-meta); margin-top: 3px; font-weight: 600; display: block; }
+.cc-news-text h3 { font-weight: 700; font-size: 20px; color: var(--cc-ink); margin: 0 0 5px; }
+.cc-news-text p { font-size: 14.5px; line-height: 1.5; color: var(--cc-muted); margin: 0; }
+
+/* ---------- Footer ---------- */
+.cc-footer { background: var(--cc-footer-bg); color: #dce4ec; border-top: 3px solid var(--cc-red); }
+.cc-footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 36px; padding-top: 44px; padding-bottom: 28px; }
+.cc-footer p { font-size: 14.5px; line-height: 1.6; color: #c2cfdc; margin: 0; max-width: 300px; }
+.cc-footer-brand { display: flex; align-items: center; gap: 13px; margin-bottom: 16px; }
+.cc-footer-brand .cc-brand-name { color: #fff; font-size: 20px; }
+.cc-footer-h { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; color: #9fb3c8; margin-bottom: 14px; }
+.cc-footer-mail { display: inline-block; margin-top: 12px; color: #fff; font-size: 14.5px; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.35); }
+.cc-footer-mail:hover { border-color: #fff; }
+.cc-social { display: flex; gap: 11px; }
+.cc-social a { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; transition: background .2s; }
+.cc-social a:hover { background: var(--cc-red); }
+.cc-footer-bar { border-top: 1px solid rgba(255,255,255,.12); }
+.cc-footer-bar-inner { padding-top: 16px; padding-bottom: 16px; display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between; align-items: center; font-size: 13px; color: #9fb3c8; }
+.cc-footer-links { display: flex; gap: 20px; }
+.cc-footer-links a { color: #9fb3c8; text-decoration: none; }
+.cc-footer-links a:hover { color: #fff; }
+
+/* Footer columns driven by modules (bottom1–bottom4 via "ccfootcol" chrome) */
+.cc-footer-col-body { color: #c2cfdc; font-size: 14.5px; line-height: 1.7; }
+.cc-footer-col-body p { margin: 0 0 8px; color: #c2cfdc; }
+.cc-footer-col-body a { color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.3); }
+.cc-footer-col-body a:hover { border-color: #fff; }
+.cc-footer-col-body ul { list-style: none; margin: 0; padding: 0; }
+.cc-footer-col-body li { padding: 3px 0; }
+.cc-footer-col-body img { max-width: 100%; height: auto; }
+.cc-footer-col-body h1, .cc-footer-col-body h2, .cc-footer-col-body h3, .cc-footer-col-body h4 { color: #fff; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 700; margin: 0 0 10px; }
+.cc-footer-copy, .cc-footer-copy p { margin: 0; font-size: 13px; color: #9fb3c8; }
+.cc-footer-copy a { color: #9fb3c8; text-decoration: none; }
+.cc-footer-meta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; color: #9fb3c8; }
+.cc-footer-meta a { color: #9fb3c8; text-decoration: none; }
+.cc-footer-meta a:hover { color: #fff; }
+.cc-footer-meta .menu { list-style: none; margin: 0; padding: 0; display: flex; gap: 18px; flex-wrap: wrap; }
+.cc-footer-meta .menu a { font-size: 13px; }
+
+/* ---------- Interior pages (everything that isn't the front page) ---------- */
+.cc-banner { background: var(--cc-paper); border-top: 1px solid var(--cc-line); border-bottom: 1px solid var(--cc-line); }
+.cc-banner .cc-wrap { padding-top: 30px; padding-bottom: 30px; }
+.cc-banner-title { font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 800; font-size: 40px; color: var(--cc-ink); margin: 0; }
+.cc-breadcrumbs { margin-top: 8px; font-size: 13.5px; color: var(--cc-meta); }
+.cc-breadcrumbs ol, .cc-breadcrumbs ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.cc-breadcrumbs a { color: var(--cc-blue); text-decoration: none; }
+.cc-breadcrumbs a:hover { text-decoration: underline; }
+.cc-breadcrumbs .divider { color: var(--cc-line); padding: 0 2px; }
+
+.cc-page { display: flex; gap: 44px; padding-top: 48px; padding-bottom: 64px; align-items: flex-start; }
+.cc-main { flex: 1; min-width: 0; }
+.cc-side { width: 300px; flex: none; }
+
+/* Content typography inside the main column (com_content, contact, etc.) */
+.cc-main h1 { font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 800; font-size: 34px; color: var(--cc-ink); margin: 0 0 16px; line-height: 1.1; }
+.cc-main h2 { font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 700; font-size: 26px; color: var(--cc-ink); margin: 32px 0 12px; }
+.cc-main h3 { font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 700; font-size: 21px; color: var(--cc-ink); margin: 26px 0 10px; }
+.cc-main p, .cc-main li { font-size: 16px; line-height: 1.7; color: var(--cc-muted); }
+.cc-main p { margin: 0 0 16px; }
+.cc-main ul, .cc-main ol { margin: 0 0 16px; padding-left: 22px; }
+.cc-main li { margin-bottom: 6px; }
+.cc-main a { color: var(--cc-red); }
+.cc-main a:hover { color: var(--cc-red-dark); }
+.cc-main img { border-radius: 8px; }
+.cc-main blockquote { margin: 20px 0; padding: 14px 20px; border-left: 4px solid var(--cc-blue); background: var(--cc-paper); border-radius: 0 8px 8px 0; font-style: italic; color: var(--cc-ink); }
+.cc-main table { border-collapse: collapse; width: 100%; margin: 0 0 18px; font-size: 15px; }
+.cc-main th, .cc-main td { border: 1px solid var(--cc-line); padding: 9px 12px; text-align: left; }
+.cc-main th { background: var(--cc-paper); font-family: 'Barlow', sans-serif; font-weight: 700; }
+.cc-main .btn, .cc-main button[type="submit"], .cc-main .button {
+	display: inline-flex; align-items: center; gap: 8px; background: var(--cc-red); color: #fff; border: none;
+	font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: .4px;
+	text-transform: uppercase; padding: 11px 22px; border-radius: 7px; text-decoration: none; cursor: pointer;
+}
+.cc-main .btn:hover, .cc-main button[type="submit"]:hover, .cc-main .button:hover { background: var(--cc-red-dark); }
+.cc-main .page-header h1, .cc-main .page-header h2 { margin-top: 0; }
+
+/* com_content article actions (edit / print / email) — only logged-in editors see these.
+   Joomla renders them as a Bootstrap dropdown using its icon font; this template ships
+   neither Bootstrap nor that font, so without this they appear as an empty red button with
+   a stray bullet list. Re-render them as plain inline text links instead. */
+.cc-main .icons { margin: 0 0 16px; }
+.cc-main .icons .btn-group, .cc-main .icons .dropdown { position: static; }
+/* .btn.dropdown-toggle beats the .icons .btn restyle below on specificity,
+   so the empty cog toggle is truly removed (not just visually blank). */
+.cc-main .icons .btn.dropdown-toggle, .cc-main .icons .dropdown-toggle { display: none; }
+.cc-main .icons .caret { display: none; }
+.cc-main .icons .dropdown-menu {
+	position: static; display: block; float: none; list-style: none;
+	margin: 0; padding: 0; min-width: 0; border: 0; box-shadow: none; background: none;
+}
+.cc-main .icons .dropdown-menu > li { display: inline-block; margin: 0 16px 0 0; }
+.cc-main .icons .btn,
+.cc-main .icons .dropdown-menu > li > a,
+.cc-main .icons ul.actions > li > a,
+.cc-main .actions > li > a {
+	display: inline-block; background: none; color: var(--cc-blue); border: 0; padding: 0;
+	box-shadow: none; font-family: 'Barlow', sans-serif; font-weight: 600; font-size: 13.5px;
+	letter-spacing: 0; text-transform: none;
+}
+.cc-main .icons .btn:hover,
+.cc-main .icons .dropdown-menu > li > a:hover,
+.cc-main .actions > li > a:hover { background: none; color: var(--cc-blue-dark); text-decoration: underline; }
+/* hide the icon-font glyphs that have no font to render (empty squares) */
+.cc-main .icons [class^="icon-"], .cc-main .icons [class*=" icon-"],
+.cc-main .actions [class^="icon-"], .cc-main .actions [class*=" icon-"] { display: none; }
+
+/* Sidebar wells */
+.cc-side .cc-well { background: var(--cc-card); border: 1px solid var(--cc-line); border-radius: 10px; padding: 20px 20px 22px; margin-bottom: 22px; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+.cc-well-title { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 18px; color: var(--cc-ink); margin: 0 0 12px; padding-bottom: 10px; border-bottom: 2px solid var(--cc-line); }
+.cc-well-body { font-size: 14.5px; line-height: 1.6; color: var(--cc-muted); }
+.cc-well-body a { color: var(--cc-blue); text-decoration: none; }
+.cc-well-body a:hover { text-decoration: underline; }
+.cc-well-body ul { list-style: none; margin: 0; padding: 0; }
+.cc-well-body li { padding: 6px 0; border-bottom: 1px solid var(--cc-line); }
+.cc-well-body li:last-child { border-bottom: none; }
+
+/* ============================================================
+   Component coverage — styles the output of Joomla's own components inside the
+   interior content column: com_content blog/category/list, com_users & com_contact
+   forms, search, and tags. (Single-article typography is handled above.)
+   ============================================================ */
+
+/* Blog item rows (multi-column blog layouts) */
+.cc-main .items-row { display: flex; flex-wrap: wrap; gap: 32px; margin: 0 0 8px; }
+.cc-main .items-row > [class*="column-"], .cc-main .items-row > .item { flex: 1 1 0; min-width: 220px; }
+.cc-main .item { padding-bottom: 26px; margin-bottom: 26px; border-bottom: 1px solid var(--cc-line); }
+.cc-main .item:last-child { margin-bottom: 0; border-bottom: none; }
+.cc-main .item > h2, .cc-main .item > h3 { margin-top: 0; }
+.cc-main .item-image, .cc-main .article-intro-image { margin: 0 0 14px; }
+.cc-main .item-image img, .cc-main .article-intro-image img { border-radius: 8px; }
+
+/* Article info bar (date / author / category / hits) */
+.cc-main .article-info { font-size: 13px; color: var(--cc-meta); margin: 0 0 14px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.cc-main .article-info dt, .cc-main .article-info dd { margin: 0; }
+.cc-main .article-info a { color: var(--cc-blue); }
+
+/* Read more */
+.cc-main p.readmore { margin: 6px 0 0; }
+.cc-main p.readmore a, .cc-main a.readmore {
+	display: inline-flex; align-items: center; gap: 6px; background: none; color: var(--cc-red); border: 0;
+	padding: 0; box-shadow: none; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 700;
+	font-size: 14.5px; letter-spacing: .3px; text-transform: none;
+}
+.cc-main p.readmore a:hover, .cc-main a.readmore:hover { background: none; color: var(--cc-red-dark); }
+
+/* Pagination.
+   Joomla 3 emits this two ways: a bare <ul class="pagination"> (template overrides),
+   or com_content's <div class="pagination"><p class="counter">…</p><ul>…</ul></div>
+   where the inner ul has NO class. Cover both. */
+.cc-main .pagination { margin: 28px 0 0; padding: 18px 0 0; border-top: 1px solid var(--cc-line); }
+.cc-main ul.pagination, .cc-main .pagination ul { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; justify-content: center; }
+.cc-main .pagination .counter { text-align: center; font-size: 13px; color: var(--cc-meta); float: none; margin: 0 0 10px; }
+.cc-main .pagination li > a, .cc-main .pagination li > span {
+	display: inline-block; min-width: 38px; text-align: center; padding: 8px 12px; border: 1px solid var(--cc-line);
+	border-radius: 6px; color: var(--cc-blue); text-decoration: none; font-weight: 600; font-size: 14px;
+}
+.cc-main .pagination li > a:hover { background: var(--cc-paper); }
+.cc-main .pagination li.active > span, .cc-main .pagination li.active > a { background: var(--cc-blue); color: #fff; border-color: var(--cc-blue); }
+.cc-main .pagination li.disabled > span { color: var(--cc-meta); }
+
+/* Article prev/next navigation ("Show Navigation" on articles) */
+.cc-main ul.pager, .cc-main ul.pagenav {
+	list-style: none; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+	margin: 28px 0 0; padding: 18px 0 0; border-top: 1px solid var(--cc-line);
+}
+.cc-main ul.pager li, .cc-main ul.pagenav li { margin: 0; }
+.cc-main ul.pager a, .cc-main ul.pagenav a {
+	display: inline-block; padding: 9px 16px; border: 1px solid var(--cc-line); border-radius: 6px;
+	color: var(--cc-blue); text-decoration: none; font-weight: 600; font-size: 14px;
+}
+.cc-main ul.pager a:hover, .cc-main ul.pagenav a:hover { background: var(--cc-paper); }
+
+/* Tags */
+.cc-main .tags, .cc-main .tag-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; padding: 0; }
+.cc-main .tags li, .cc-main .tag-list li { margin: 0; }
+.cc-main .tags a, .cc-main .tag-list a, .cc-main .label {
+	display: inline-block; background: var(--cc-paper); color: var(--cc-blue); border: 1px solid var(--cc-line);
+	border-radius: 20px; padding: 4px 13px; font-size: 13px; font-weight: 600; text-decoration: none; line-height: 1.4;
+}
+.cc-main .tags a:hover, .cc-main .tag-list a:hover { background: var(--cc-blue); color: #fff; border-color: var(--cc-blue); }
+
+/* Forms (com_users login/registration/profile/reset, com_contact) */
+.cc-main fieldset { border: 1px solid var(--cc-line); border-radius: 10px; padding: 20px 22px; margin: 0 0 22px; min-width: 0; }
+.cc-main legend { font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 700; font-size: 20px; color: var(--cc-ink); padding: 0 8px; width: auto; border: none; margin: 0; }
+.cc-main label { font-weight: 600; color: var(--cc-ink); font-size: 14.5px; }
+.cc-main .control-group { margin: 0 0 16px; }
+.cc-main .control-label { margin: 0 0 6px; }
+.cc-main input[type="text"], .cc-main input[type="email"], .cc-main input[type="password"],
+.cc-main input[type="search"], .cc-main input[type="url"], .cc-main input[type="tel"],
+.cc-main input[type="number"], .cc-main input[type="date"], .cc-main textarea, .cc-main select {
+	width: 100%; max-width: 420px; font-family: 'Barlow', sans-serif; font-size: 15px; color: var(--cc-ink);
+	background: var(--cc-card); border: 1px solid var(--cc-line); border-radius: 7px; padding: 10px 12px; line-height: 1.4;
+}
+.cc-main textarea { max-width: 100%; min-height: 130px; }
+.cc-main input:focus, .cc-main textarea:focus, .cc-main select:focus { outline: none; border-color: var(--cc-blue); box-shadow: 0 0 0 3px rgba(78,112,150,.18); }
+.cc-main input[type="checkbox"], .cc-main input[type="radio"] { margin-right: 8px; }
+.cc-main .checkbox label, .cc-main .radio label { font-weight: 500; }
+.cc-main .required, .cc-main .star { color: var(--cc-red); }
+
+/* Joomla system messages / validation */
+.cc-main .alert { border: 1px solid var(--cc-line); border-radius: 8px; padding: 12px 16px; margin: 0 0 18px; font-size: 14.5px; }
+.cc-main .alert-success { background: #eaf6ee; border-color: #bfe3cc; color: #1d6b3a; }
+.cc-main .alert-info { background: #e9f1f8; border-color: #c4d9ec; color: #275680; }
+.cc-main .alert-warning { background: #fdf4e3; border-color: #f0dca8; color: #8a6300; }
+.cc-main .alert-danger, .cc-main .alert-error { background: #fbeaea; border-color: #ecc4c4; color: #8b2424; }
+.cc-main input.invalid, .cc-main textarea.invalid, .cc-main select.invalid { border-color: var(--cc-red); }
+
+/* Search results (com_search / com_finder) */
+.cc-main .search-results { list-style: none; margin: 16px 0 0; padding: 0; }
+.cc-main .result-title, .cc-main .result__title { font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 700; font-size: 19px; margin: 0 0 4px; }
+.cc-main .result-text, .cc-main .result__body { color: var(--cc-muted); font-size: 15px; margin: 0 0 6px; }
+.cc-main .result-category, .cc-main .result__meta { color: var(--cc-meta); font-size: 13px; margin: 0 0 18px; }
+.cc-main .highlight { background: var(--cc-gold); color: var(--cc-ink); padding: 0 2px; border-radius: 2px; }
+
+/* ---------- Optional module bands (notice / feature / sponsors / above-footer) ---------- */
+/* Each only renders when its position has modules assigned. */
+
+/* notice: slim site-wide announcement strip above the header */
+.cc-notice { background: var(--cc-paper); border-bottom: 1px solid var(--cc-line); font-size: 14px; color: var(--cc-ink); }
+.cc-notice .cc-wrap { padding-top: 9px; padding-bottom: 9px; text-align: center; }
+.cc-notice p { margin: 0; }
+.cc-notice a { color: var(--cc-red); font-weight: 600; text-decoration: none; }
+.cc-notice a:hover { color: var(--cc-red-dark); text-decoration: underline; }
+
+/* feature: full-width band under the hero on the home page */
+.cc-feature { padding: 52px 0; border-bottom: 1px solid var(--cc-line); }
+.cc-feature h2 { font-weight: 800; font-size: 30px; color: var(--cc-ink); margin: 0 0 12px; }
+.cc-feature p { font-size: 16px; line-height: 1.7; color: var(--cc-muted); margin: 0 0 14px; }
+
+/* sponsors: a logo strip; logos sit on one tidy row and warm up on hover */
+.cc-sponsors { background: var(--cc-paper); border-top: 1px solid var(--cc-line); }
+.cc-sponsors .cc-wrap { padding-top: 30px; padding-bottom: 30px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 40px; }
+.cc-sponsors img { max-height: 52px; width: auto; filter: grayscale(1); opacity: .72; transition: filter .2s, opacity .2s; }
+.cc-sponsors a:hover img, .cc-sponsors img:hover { filter: none; opacity: 1; }
+
+/* above-footer: a coloured call-to-action band */
+.cc-cta { background: var(--cc-blue); color: #fff; }
+.cc-cta .cc-wrap { padding-top: 46px; padding-bottom: 46px; text-align: center; }
+.cc-cta h2, .cc-cta h3 { color: #fff; font-weight: 800; font-size: 30px; margin: 0 0 10px; }
+.cc-cta p { color: rgba(255,255,255,.92); font-size: 17px; line-height: 1.6; margin: 0 0 22px; max-width: 640px; margin-left: auto; margin-right: auto; }
+.cc-cta a:not(.cc-btn) { color: #fff; text-decoration: underline; }
+
+/* ---------- Error page ---------- */
+.cc-error { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--cc-paper); }
+.cc-error-box { text-align: center; padding: 40px; }
+.cc-error-code { font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 800; font-size: 96px; color: var(--cc-blue); line-height: 1; }
+.cc-error-box h1 { font-weight: 700; font-size: 26px; color: var(--cc-ink); margin: 8px 0 24px; }
+
+/* ---------- Accessibility helpers ---------- */
+/* Skip-to-content link: off-screen until focused. */
+.cc-skip {
+	position: absolute; left: -9999px; top: 0; z-index: 1000;
+	background: var(--cc-red); color: #fff; padding: 10px 18px; border-radius: 0 0 6px 0;
+	font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 700; text-decoration: none;
+}
+.cc-skip:focus { left: 0; }
+#content:focus { outline: none; }
+
+/* Visible keyboard focus ring (does not show on mouse click). */
+.cc-site a:focus-visible,
+.cc-login:focus-visible,
+.cc-btn:focus-visible,
+.cc-card-link:focus-visible,
+.cc-arrow:focus-visible,
+.cc-dot:focus-visible,
+.cc-nav-toggle:focus-visible,
+.cc-sub-toggle:focus-visible,
+.cc-news-all:focus-visible { outline: 3px solid var(--cc-gold); outline-offset: 2px; }
+.cc-nav a:focus-visible,
+.cc-nav span:focus-visible { outline: 3px solid var(--cc-gold); outline-offset: -3px; }
+
+/* Keyboard users can open desktop dropdowns by tabbing into them. */
+@media (min-width: 861px) {
+	.cc-nav ul.menu li:focus-within > ul.cc-submenu { display: block; }
+	.cc-nav ul.menu li.mega:focus-within > .cc-mega { display: block; }
+}
+
+/* Desktop caret hint on top-level items that have a dropdown. */
+@media (min-width: 861px) {
+	.cc-nav ul.menu > li.has-children > a::after,
+	.cc-nav ul.menu > li.parent > a::after {
+		content: ""; display: inline-block; width: 6px; height: 6px; margin-left: 8px;
+		border: solid rgba(255,255,255,.7); border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg);
+	}
+}
+
+/* The nav toggle (hamburger) + per-item caret button are hidden on desktop. */
+.cc-nav-toggle { display: none; }
+.cc-sub-toggle { display: none; }
+
+/* Respect reduced-motion: no slide/lift animation. */
+@media (prefers-reduced-motion: reduce) {
+	.cc-slide { transition: none; }
+	.cc-card { transition: none; }
+	.cc-card:hover { transform: none; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+	.cc-promo-grid { grid-template-columns: 1fr; }
+	.cc-footer-grid { grid-template-columns: 1fr; }
+	.cc-slide-copy h1, .cc-slide-copy h2 { font-size: 40px; }
+	.cc-hero { height: 460px; }
+	/* Interior pages: stack the content column above the sidebar instead of
+	   squeezing them side-by-side. */
+	.cc-page { flex-direction: column; gap: 28px; padding-top: 32px; padding-bottom: 44px; }
+	.cc-side { width: 100%; }
+	.cc-banner .cc-wrap { padding-top: 22px; padding-bottom: 22px; }
+	.cc-banner-title { font-size: 30px; }
+}
+
+/* ---------- Mobile navigation (hamburger + accordion submenus) ---------- */
+@media (max-width: 860px) {
+	.cc-nav .cc-wrap { display: flex; flex-wrap: wrap; align-items: center; padding-top: 0; padding-bottom: 0; }
+	.cc-nav-toggle {
+		display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+		order: 1; margin-left: auto; background: transparent; border: 0; padding: 16px 8px; cursor: pointer;
+	}
+	.cc-nav-toggle-bar { display: block; width: 26px; height: 3px; background: #fff; border-radius: 2px; transition: transform .2s, opacity .2s; }
+	.cc-nav.is-nav-open .cc-nav-toggle-bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+	.cc-nav.is-nav-open .cc-nav-toggle-bar:nth-child(2) { opacity: 0; }
+	.cc-nav.is-nav-open .cc-nav-toggle-bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+	.cc-nav-panel { order: 2; flex-basis: 100%; display: none; }
+	.cc-nav.is-nav-open .cc-nav-panel { display: block; padding-bottom: 8px; }
+
+	.cc-nav ul.menu { flex-direction: column; }
+	.cc-nav ul.menu > li { position: relative; border-top: 1px solid rgba(255,255,255,.12); }
+	.cc-nav ul.menu > li:first-child { border-top: none; }
+	.cc-nav ul.menu > li > a,
+	.cc-nav ul.menu > li > span { padding: 14px 4px; }
+	.cc-nav ul.menu > li.current > a,
+	.cc-nav ul.menu > li.active > a { box-shadow: inset 3px 0 0 var(--cc-gold); }
+
+	/* per-item caret toggle, right-aligned tap target */
+	.cc-sub-toggle {
+		display: inline-flex; align-items: center; justify-content: center; position: absolute;
+		right: 0; top: 0; width: 52px; height: 52px; background: transparent; border: 0; cursor: pointer;
+	}
+	.cc-caret { display: inline-block; width: 9px; height: 9px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); transition: transform .2s; }
+	li.is-open > .cc-sub-toggle .cc-caret { transform: rotate(-135deg); }
+
+	/* submenus + mega become in-flow accordions, shown only when the item is open.
+	   These selectors mirror the desktop ones so they win on specificity + source order. */
+	.cc-nav ul.menu ul.cc-submenu,
+	.cc-nav ul.menu li.mega > .cc-mega {
+		position: static; width: auto; min-width: 0; max-width: none; box-shadow: none;
+		display: none; background: var(--cc-blue-dark); border-radius: 0;
+	}
+	.cc-nav ul.menu li.is-open > ul.cc-submenu,
+	.cc-nav ul.menu li.mega.is-open > .cc-mega { display: block; }
+	.cc-nav ul.menu .cc-mega-inner { flex-direction: column; padding: 0; }
+	.cc-nav ul.menu .cc-mega-col { max-width: none; min-width: 0; padding: 6px 16px 12px; }
+	.cc-nav ul.menu .cc-mega-col + .cc-mega-col { border-left: none; border-top: 1px solid rgba(255,255,255,.14); }
+	.cc-nav ul.menu ul.cc-submenu { padding: 4px 0 8px; }
+	.cc-nav ul.menu ul.cc-submenu li > a,
+	.cc-nav ul.menu ul.cc-submenu li > span { padding: 11px 16px; }
+	/* right-edge anchoring no longer applies in the stacked layout */
+	.cc-nav ul.menu > li:nth-last-child(-n+2) > ul.cc-submenu,
+	.cc-nav ul.menu > li.mega:nth-last-child(-n+2) > .cc-mega { right: auto; left: auto; }
+}
+
+@media (max-width: 560px) {
+	.cc-wrap { padding-left: 18px; padding-right: 18px; }
+	.cc-header-inner { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+	.cc-brand-name { font-size: 22px; }
+	.cc-slide-copy h1, .cc-slide-copy h2 { font-size: 32px; }
+	.cc-slide-blurb, .cc-slide-blurb p { font-size: 16px; }
+}
+
+/* ============================================================
+   Automatic dark theme — follows the visitor's device setting.
+   Only the *surface* tokens are re-mapped (backgrounds, text, lines); the brand
+   red/blue (and any Options overrides of them) carry through. Links are lightened
+   for contrast: a literal fallback first, then a brand-derived color-mix for
+   browsers that support it, so a re-themed primary still tints the dark links.
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--cc-ink:   #e9edf2;   /* headings / strong text */
+		--cc-muted: #b4bdc7;   /* body copy */
+		--cc-meta:  #8d99a6;   /* small meta text */
+		--cc-line:  #333c46;   /* borders */
+		--cc-line-2:#2b333c;
+		--cc-paper: #1b2128;   /* tinted surfaces: banner, news bg, blockquote, th, hovers */
+		--cc-bg:    #14181d;   /* page background */
+		--cc-card:  #1f262e;   /* cards, sidebar wells, news list */
+	}
+
+	/* deeper shadows read better on a dark page */
+	.cc-card, .cc-side .cc-well, .cc-news-list { box-shadow: 0 1px 3px rgba(0,0,0,.45); }
+	.cc-card:hover { box-shadow: 0 10px 28px rgba(0,0,0,.5); }
+
+	/* Link contrast. Red content links / card links / notice links -> lighter red. */
+	.cc-main a, .cc-card-link, .cc-notice a { color: #e8857f; }
+	.cc-main a, .cc-card-link, .cc-notice a { color: color-mix(in srgb, var(--cc-red) 55%, white); }
+	.cc-main a:hover { color: #f0a39e; }
+	.cc-main a:hover { color: color-mix(in srgb, var(--cc-red) 40%, white); }
+
+	/* Blue accents (sidebar/breadcrumb/news links, date chips, editor action links,
+	   pagination) -> lighter blue. */
+	.cc-well-body a, .cc-breadcrumbs a, .cc-news-all, .cc-day,
+	.cc-main .icons .btn, .cc-main .icons .dropdown-menu > li > a,
+	.cc-main .pagination li > a, .cc-main ul.pager a, .cc-main ul.pagenav a { color: #8fb3d6; }
+	.cc-well-body a, .cc-breadcrumbs a, .cc-news-all, .cc-day,
+	.cc-main .icons .btn, .cc-main .icons .dropdown-menu > li > a,
+	.cc-main .pagination li > a, .cc-main ul.pager a, .cc-main ul.pagenav a { color: color-mix(in srgb, var(--cc-blue) 50%, white); }
+}
+
+/* ============================================================
+   Print — strip site chrome and print the page's content cleanly in black on
+   white (schedules, contact info, articles). Triggered by the browser's Print.
+   ============================================================ */
+@media print {
+	.cc-header, .cc-nav, .cc-notice, .cc-hero, .cc-banner .cc-breadcrumbs,
+	.cc-side, .cc-promo, .cc-news, .cc-feature, .cc-sponsors, .cc-cta,
+	.cc-footer, .cc-login, .cc-skip, .cc-nav-toggle, .cc-main .icons { display: none !important; }
+	body.cc-site { background: #fff; color: #000; }
+	.cc-wrap { max-width: none; padding: 0; }
+	.cc-page { display: block; padding: 0; }
+	.cc-main { width: 100%; }
+	.cc-banner { background: none; border: none; }
+	.cc-banner .cc-wrap { padding: 0 0 8px; }
+	.cc-banner-title, .cc-main h1, .cc-main h2, .cc-main h3 { color: #000; }
+	.cc-main p, .cc-main li, .cc-main td, .cc-main th { color: #000; }
+	.cc-main a { color: #000; text-decoration: underline; }
+	/* show the real URL after each link so a printed page is still useful */
+	.cc-main a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 11px; word-break: break-all; }
+	.cc-main table, .cc-main th, .cc-main td { border-color: #000; }
+}

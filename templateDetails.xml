@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="template" client="site">
+	<name>cccc2026</name>
+	<creationDate>2026-06</creationDate>
+	<author>Circle City Curling</author>
+	<authorEmail>info@circlecitycurling.com</authorEmail>
+	<copyright>Circle City Curling Club</copyright>
+	<license>GNU GPL v2 or later</license>
+	<version>1.3.6</version>
+	<description>Circle City Curling — front-end template. The home scroller and News list are driven entirely by Joomla Articles + modules (no HTML editing). Logo, brand colours and key text are set from the template Options panel.</description>
+
+	<updateservers>
+		<server type="extension" name="Circle City Curling Template Updates">https://raw.githubusercontent.com/Fhajad/circlecity-curling-template/main/update.xml</server>
+	</updateservers>
+
+	<files>
+		<filename>index.php</filename>
+		<filename>component.php</filename>
+		<filename>error.php</filename>
+		<filename>favicon.ico</filename>
+		<filename>templateDetails.xml</filename>
+		<folder>css</folder>
+		<folder>js</folder>
+		<folder>fonts</folder>
+		<folder>images</folder>
+		<folder>html</folder>
+		<folder>language</folder>
+	</files>
+
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.tpl_cccc2026.ini</language>
+		<language tag="en-GB">en-GB/en-GB.tpl_cccc2026.sys.ini</language>
+	</languages>
+
+	<positions>
+		<position>notice</position>
+		<position>menu</position>
+		<position>scroller</position>
+		<position>feature</position>
+		<position>promo</position>
+		<position>news</position>
+		<position>sponsors</position>
+		<position>above-footer</position>
+		<position>masthead</position>
+		<position>right</position>
+		<position>bottom1</position>
+		<position>bottom2</position>
+		<position>bottom3</position>
+		<position>bottom4</position>
+		<position>footer</position>
+		<position>footer-menu</position>
+		<position>debug</position>
+	</positions>
+
+	<config>
+		<fields name="params">
+			<fieldset name="branding" label="Branding"
+				description="Logo, club name and key text shown around the site. Leave a field blank to use its built-in default.">
+				<field name="logo" type="media"
+					label="Header logo"
+					description="Image shown in the top-left header. If empty, the CSS-drawn club roundel is used instead. Use a transparent PNG/SVG; it is sized to about 54px tall." />
+				<field name="logoFooter" type="media"
+					label="Footer logo"
+					description="Optional logo for the dark footer. If empty, the header logo is used; if that is also empty, the roundel is used." />
+				<field name="brandName" type="text"
+					default="Circle City Curling"
+					label="Club name"
+					description="Text shown beside the logo in the header and footer." />
+				<field name="tagline" type="text"
+					default="Indianapolis&#8217;s home for curling since 2015"
+					label="Header tagline"
+					description="Small line of text shown under the club name in the header." />
+				<field name="footerCopy" type="text"
+					default=""
+					label="Footer copyright line"
+					description="Bottom-bar copyright text. Leave blank to auto-generate &#8220;&#169; {year} {club name}. All rights reserved.&#8221; (A &#8216;footer&#8217; position module, if assigned, overrides this.)" />
+				<field name="loginUrl" type="text"
+					default="index.php?option=com_users&amp;view=login"
+					label="Member login URL"
+					description="Where the Member Login button points." />
+			</fieldset>
+
+			<fieldset name="colours" label="Colours"
+				description="Brand colours. Each maps to the matching CSS variable; leave one untouched to keep the default brand colour.">
+				<field name="colorPrimary" type="color"
+					default="#8b2424"
+					label="Primary (red)"
+					description="Buttons, login button, accents." />
+				<field name="colorPrimaryDark" type="color"
+					default="#731c1c"
+					label="Primary — hover/dark"
+					description="Darker shade used on hover for the primary colour." />
+				<field name="colorAccent" type="color"
+					default="#4e7096"
+					label="Accent (blue)"
+					description="Navigation bar, headings, links." />
+				<field name="colorAccentDark" type="color"
+					default="#3d5a78"
+					label="Accent — dark"
+					description="Darker shade used for the footer and nav hover states." />
+			</fieldset>
+
+			<fieldset name="display" label="Display"
+				description="Show or hide the built-in demo blocks that appear on the Home page until you create their modules.">
+				<field name="showPageBanner" type="radio" class="btn-group btn-group-yesno"
+					default="1"
+					label="Interior page-title banner"
+					description="The styled title bar (page title + breadcrumb) shown at the top of every non-home page. Set to Hide if your articles/menu items already display their own title, to avoid showing it twice.">
+					<option value="1">Show</option>
+					<option value="0">Hide</option>
+				</field>
+				<field name="showPlaceholderHero" type="radio" class="btn-group btn-group-yesno"
+					default="1"
+					label="Demo hero slider"
+					description="When no module is published to the &#8216;scroller&#8217; position, show the built-in 3-slide demo hero. Turn off to leave the area empty until your module is live.">
+					<option value="1">Show</option>
+					<option value="0">Hide</option>
+				</field>
+				<field name="showPlaceholderPromo" type="radio" class="btn-group btn-group-yesno"
+					default="1"
+					label="Demo promo cards"
+					description="When no modules are in the &#8216;promo&#8217; position, show the three built-in demo cards.">
+					<option value="1">Show</option>
+					<option value="0">Hide</option>
+				</field>
+				<field name="showPlaceholderNews" type="radio" class="btn-group btn-group-yesno"
+					default="1"
+					label="Demo news item"
+					description="When no module is in the &#8216;news&#8217; position, show the built-in sample news row.">
+					<option value="1">Show</option>
+					<option value="0">Hide</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
