@@ -9,7 +9,7 @@
 		<version>1.3.7</version>
 		<infourl title="Circle City Curling Template">https://github.com/Fhajad/circlecity-curling-template</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/Fhajad/circlecity-curling-template/releases/download/v1.3.7/cccc2026-template-1.3.7.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/Fhajad/circlecity-curling-template/releases/latest/download/cccc2026-template.zip</downloadurl>
 		</downloads>
 		<targetplatform name="joomla" version="3.[0-9]+"/>
 	</update>
