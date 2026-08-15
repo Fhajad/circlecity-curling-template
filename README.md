@@ -2,7 +2,10 @@
 
 A front-end template that reproduces the approved homepage mockup, with the **home scroller** and **News & Announcements** driven entirely by Joomla Articles + modules. **No HTML editing is required to update content** — staff just write Articles.
 
-> **What's new in 1.4.0**
+> **What's new in 1.5.0**
+> - **Dark-mode logo variant** — new Options fields ("Header logo (dark mode)" / "Footer logo (dark mode)") let you upload a second logo that swaps in automatically for dark-mode visitors. Fixes logos with an opaque light/white background showing as a bright box on a dark page — optional, falls back to your regular logo if left blank.
+>
+> **From 1.4.0**
 > - **Light/dark toggle in the footer** — visitors can now hard-set their preference (overrides the device setting) with a sun/moon button; their choice is remembered for next visit. Auto (follow device) is still the default until someone clicks it.
 >
 > **From 1.3.0**
@@ -143,8 +146,10 @@ The `bottom1`–`bottom4` columns use the `ccfootcol` chrome (module title becom
 Go to **Extensions → Templates → Styles → cccc2026 → Options** (the *Options* tab). Everything here is saved without touching any file; leave a field blank to use its built-in default.
 
 **Branding**
-- **Header logo** — click *Select* and upload/choose an image (transparent PNG or SVG works best; it's sized to ~54px tall). This replaces the CSS-drawn roundel in the top-left. Clear the field to go back to the roundel.
-- **Footer logo** — optional separate logo for the dark footer. If empty, the header logo is reused; if that's also empty, the roundel shows.
+- **Header logo** — click *Select* and upload/choose an image (transparent PNG or SVG works best; it's sized to ~118px tall). This replaces the CSS-drawn roundel in the top-left. Clear the field to go back to the roundel.
+- **Header logo (dark mode)** — optional second logo shown to dark-mode visitors instead of the Header logo. Use this if your main logo has an opaque light/white background (common with JPGs) — otherwise it shows as a bright box once the page goes dark. Leave blank to use the Header logo in both modes.
+- **Footer logo** — optional separate logo for the footer (which always has a dark background). If empty, the header logo is reused; if that's also empty, the roundel shows.
+- **Footer logo (dark mode)** — optional, same idea as the header's dark variant. Leave blank to fall back to Header logo (dark mode), then to Footer logo.
 - **Club name** — the text beside the logo (header + footer).
 - **Header tagline** — the small line under the club name.
 - **Footer copyright line** — the bottom-bar text. Leave blank to auto-build "© {year} {club name}. All rights reserved." (A module in the `footer` position overrides this.)

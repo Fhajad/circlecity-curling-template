@@ -670,6 +670,17 @@ body.cc-site {
 .cc-theme-toggle[aria-pressed="true"] .cc-theme-icon--sun { display: none; }
 .cc-theme-toggle[aria-pressed="true"] .cc-theme-icon--moon { display: inline-flex; }
 
+/* Dark-mode logo swap (Options -> Branding -> "...logo (dark mode)"). Only present
+   in the markup when a dark-mode logo was actually set (index.php), so sites that
+   don't use it are unaffected — the single <img> just has no theme class at all. */
+.cc-logo-img--dark { display: none; }
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) .cc-logo-img--light { display: none; }
+	:root:not([data-theme="light"]) .cc-logo-img--dark { display: block; }
+}
+:root[data-theme="dark"] .cc-logo-img--light { display: none; }
+:root[data-theme="dark"] .cc-logo-img--dark { display: block; }
+
 /* ============================================================
    Print — strip site chrome and print the page's content cleanly in black on
    white (schedules, contact info, articles). Triggered by the browser's Print.

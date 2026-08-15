@@ -6,7 +6,7 @@
 	<authorEmail>info@circlecitycurling.com</authorEmail>
 	<copyright>Circle City Curling Club</copyright>
 	<license>GNU GPL v2 or later</license>
-	<version>1.4.2</version>
+	<version>1.5.0</version>
 	<description>Circle City Curling — front-end template. The home scroller and News list are driven entirely by Joomla Articles + modules (no HTML editing). Logo, brand colours and key text are set from the template Options panel.</description>
 
 	<updateservers>
@@ -58,10 +58,16 @@
 				description="Logo, club name and key text shown around the site. Leave a field blank to use its built-in default.">
 				<field name="logo" type="media"
 					label="Header logo"
-					description="Image shown in the top-left header. If empty, the CSS-drawn club roundel is used instead. Use a transparent PNG/SVG; it is sized to about 54px tall." />
+					description="Image shown in the top-left header. If empty, the CSS-drawn club roundel is used instead. It is sized to about 118px tall." />
+				<field name="logoDark" type="media"
+					label="Header logo (dark mode)"
+					description="Optional. Shown instead of the Header logo when the visitor is in dark mode (device auto-dark, or the footer light/dark toggle set to dark). Use this if your main logo has a solid light/white background — it will otherwise show as a bright box on the dark background. Leave empty to always use the Header logo in both modes." />
 				<field name="logoFooter" type="media"
 					label="Footer logo"
-					description="Optional logo for the dark footer. If empty, the header logo is used; if that is also empty, the roundel is used." />
+					description="Optional logo for the footer (which always has a dark background, independent of light/dark mode). If empty, the header logo is used; if that is also empty, the roundel is used." />
+				<field name="logoFooterDark" type="media"
+					label="Footer logo (dark mode)"
+					description="Optional. Same idea as 'Header logo (dark mode)', for the footer. Leave empty to fall back to Header logo (dark mode), or to the Footer logo if that's empty too." />
 				<field name="brandName" type="text"
 					default="Circle City Curling"
 					label="Club name"

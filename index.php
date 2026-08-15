@@ -71,8 +71,11 @@ if (!function_exists('ccMediaUrl')) {
 	}
 }
 $logoUrl       = ccMediaUrl($this->params->get('logo'), $this->baseurl);
+$logoDarkUrl   = ccMediaUrl($this->params->get('logoDark'), $this->baseurl);
 $footerLogoUrl = ccMediaUrl($this->params->get('logoFooter'), $this->baseurl);
 if ($footerLogoUrl === '') { $footerLogoUrl = $logoUrl; }
+$footerLogoDarkUrl = ccMediaUrl($this->params->get('logoFooterDark'), $this->baseurl);
+if ($footerLogoDarkUrl === '') { $footerLogoDarkUrl = $logoDarkUrl; }
 
 // Assets (fonts are self-hosted via @font-face in template.css — no external CDN)
 $doc->addStyleSheet($tpl . '/css/template.css');
@@ -176,7 +179,10 @@ if (!function_exists('ccNavTitle')) {
 		<div class="cc-wrap cc-header-inner">
 			<a class="cc-brand" href="<?php echo $this->baseurl; ?>/">
 				<?php if ($logoUrl !== '') : ?>
-					<img class="cc-logo-img" src="<?php echo htmlspecialchars($logoUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo $brandNameEsc; ?>">
+					<img class="cc-logo-img<?php echo $logoDarkUrl !== '' ? ' cc-logo-img--light' : ''; ?>" src="<?php echo htmlspecialchars($logoUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo $brandNameEsc; ?>">
+					<?php if ($logoDarkUrl !== '') : ?>
+						<img class="cc-logo-img cc-logo-img--dark" src="<?php echo htmlspecialchars($logoDarkUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo $brandNameEsc; ?>">
+					<?php endif; ?>
 				<?php else : ?>
 					<span class="cc-logo" aria-hidden="true"></span>
 				<?php endif; ?>
@@ -449,7 +455,10 @@ if (!function_exists('ccNavTitle')) {
 				<div class="cc-footer-col">
 					<div class="cc-footer-brand">
 						<?php if ($footerLogoUrl !== '') : ?>
-							<img class="cc-logo-img cc-logo-sm" src="<?php echo htmlspecialchars($footerLogoUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo $brandNameEsc; ?>">
+							<img class="cc-logo-img cc-logo-sm<?php echo $footerLogoDarkUrl !== '' ? ' cc-logo-img--light' : ''; ?>" src="<?php echo htmlspecialchars($footerLogoUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo $brandNameEsc; ?>">
+							<?php if ($footerLogoDarkUrl !== '') : ?>
+								<img class="cc-logo-img cc-logo-sm cc-logo-img--dark" src="<?php echo htmlspecialchars($footerLogoDarkUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo $brandNameEsc; ?>">
+							<?php endif; ?>
 						<?php else : ?>
 							<span class="cc-logo cc-logo-sm" aria-hidden="true"></span>
 						<?php endif; ?>
