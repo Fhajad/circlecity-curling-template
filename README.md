@@ -2,7 +2,10 @@
 
 A front-end template that reproduces the approved homepage mockup, with the **home scroller** and **News & Announcements** driven entirely by Joomla Articles + modules. **No HTML editing is required to update content** — staff just write Articles.
 
-> **What's new in 1.3.0**
+> **What's new in 1.4.0**
+> - **Light/dark toggle in the footer** — visitors can now hard-set their preference (overrides the device setting) with a sun/moon button; their choice is remembered for next visit. Auto (follow device) is still the default until someone clicks it.
+>
+> **From 1.3.0**
 > - **Every page type is styled** — blog/category/list pages, login/registration/contact forms, search results, tags and pagination now match the brand (not just single articles).
 > - **Tidied edit buttons** — the empty red box logged-in editors saw on articles (Joomla's edit/print/email controls) now renders as plain text links.
 > - **Interior banner toggle** — a Display option to hide the page-title bar site-wide if your articles already show their own title (stops the title appearing twice).

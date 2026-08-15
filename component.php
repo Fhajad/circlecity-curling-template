@@ -21,6 +21,7 @@ if ($ccOverrides !== '') { $doc->addStyleDeclaration(':root{' . $ccOverrides . '
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
+	<script>(function(){try{var t=localStorage.getItem('cc-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
 	<jdoc:include type="head" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>

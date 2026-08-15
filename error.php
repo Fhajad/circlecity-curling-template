@@ -32,6 +32,7 @@ $loginUrl = JRoute::_('index.php?option=com_users&view=login');
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
+	<script>(function(){try{var t=localStorage.getItem('cc-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?php echo $code; ?> &mdash; Circle City Curling</title>

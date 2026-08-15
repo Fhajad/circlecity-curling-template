@@ -158,6 +158,7 @@ if (!function_exists('ccNavTitle')) {
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
+	<script>(function(){try{var t=localStorage.getItem('cc-theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
 	<jdoc:include type="head" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -473,6 +474,33 @@ if (!function_exists('ccNavTitle')) {
 				<div class="cc-footer-meta">
 					<jdoc:include type="modules" name="footer-menu" style="none" />
 				</div>
+				<button type="button" class="cc-theme-toggle" id="cc-theme-toggle" aria-pressed="false" aria-label="Switch to dark mode">
+					<svg class="cc-theme-icon cc-theme-icon--sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+					<svg class="cc-theme-icon cc-theme-icon--moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+				</button>
+				<script>(function(){
+					var btn = document.getElementById('cc-theme-toggle');
+					var mq  = window.matchMedia('(prefers-color-scheme: dark)');
+					function effective() {
+						var stored = null;
+						try { stored = localStorage.getItem('cc-theme'); } catch (e) {}
+						if (stored === 'light' || stored === 'dark') { return stored; }
+						return mq.matches ? 'dark' : 'light';
+					}
+					function paint() {
+						var isDark = effective() === 'dark';
+						btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+						btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+					}
+					btn.addEventListener('click', function () {
+						var next = effective() === 'dark' ? 'light' : 'dark';
+						document.documentElement.setAttribute('data-theme', next);
+						try { localStorage.setItem('cc-theme', next); } catch (e) {}
+						paint();
+					});
+					if (mq.addEventListener) { mq.addEventListener('change', paint); }
+					paint();
+				})();</script>
 			</div>
 		</div>
 	</footer>

@@ -580,14 +580,22 @@ body.cc-site {
 }
 
 /* ============================================================
-   Automatic dark theme — follows the visitor's device setting.
-   Only the *surface* tokens are re-mapped (backgrounds, text, lines); the brand
-   red/blue (and any Options overrides of them) carry through. Links are lightened
-   for contrast: a literal fallback first, then a brand-derived color-mix for
-   browsers that support it, so a re-themed primary still tints the dark links.
+   Dark theme — follows the visitor's device setting by default, and can be
+   hard-set by the footer light/dark toggle (js writes data-theme on <html>,
+   remembered in localStorage as "cc-theme"). Only the *surface* tokens are
+   re-mapped (backgrounds, text, lines); the brand red/blue (and any Options
+   overrides of them) carry through. Links are lightened for contrast: a
+   literal fallback first, then a brand-derived color-mix for browsers that
+   support it, so a re-themed primary still tints the dark links.
+
+   Two copies of the same rules below, kept in sync on purpose:
+     1) @media (prefers-color-scheme: dark), guarded to skip when the visitor
+        explicitly chose light — this is the automatic, no-toggle-touched case.
+     2) [data-theme="dark"], unconditional — this is the toggle forcing dark
+        even when the device/system is set to light.
    ============================================================ */
 @media (prefers-color-scheme: dark) {
-	:root {
+	:root:not([data-theme="light"]) {
 		--cc-ink:   #e9edf2;   /* headings / strong text */
 		--cc-muted: #b4bdc7;   /* body copy */
 		--cc-meta:  #8d99a6;   /* small meta text */
@@ -599,24 +607,68 @@ body.cc-site {
 	}
 
 	/* deeper shadows read better on a dark page */
-	.cc-card, .cc-side .cc-well, .cc-news-list { box-shadow: 0 1px 3px rgba(0,0,0,.45); }
-	.cc-card:hover { box-shadow: 0 10px 28px rgba(0,0,0,.5); }
+	:root:not([data-theme="light"]) .cc-card,
+	:root:not([data-theme="light"]) .cc-side .cc-well,
+	:root:not([data-theme="light"]) .cc-news-list { box-shadow: 0 1px 3px rgba(0,0,0,.45); }
+	:root:not([data-theme="light"]) .cc-card:hover { box-shadow: 0 10px 28px rgba(0,0,0,.5); }
 
 	/* Link contrast. Red content links / card links / notice links -> lighter red. */
-	.cc-main a, .cc-card-link, .cc-notice a { color: #e8857f; }
-	.cc-main a, .cc-card-link, .cc-notice a { color: color-mix(in srgb, var(--cc-red) 55%, white); }
-	.cc-main a:hover { color: #f0a39e; }
-	.cc-main a:hover { color: color-mix(in srgb, var(--cc-red) 40%, white); }
+	:root:not([data-theme="light"]) .cc-main a,
+	:root:not([data-theme="light"]) .cc-card-link,
+	:root:not([data-theme="light"]) .cc-notice a { color: color-mix(in srgb, var(--cc-red) 55%, white); }
+	:root:not([data-theme="light"]) .cc-main a:hover { color: color-mix(in srgb, var(--cc-red) 40%, white); }
 
 	/* Blue accents (sidebar/breadcrumb/news links, date chips, editor action links,
 	   pagination) -> lighter blue. */
-	.cc-well-body a, .cc-breadcrumbs a, .cc-news-all, .cc-day,
-	.cc-main .icons .btn, .cc-main .icons .dropdown-menu > li > a,
-	.cc-main .pagination li > a, .cc-main ul.pager a, .cc-main ul.pagenav a { color: #8fb3d6; }
-	.cc-well-body a, .cc-breadcrumbs a, .cc-news-all, .cc-day,
-	.cc-main .icons .btn, .cc-main .icons .dropdown-menu > li > a,
-	.cc-main .pagination li > a, .cc-main ul.pager a, .cc-main ul.pagenav a { color: color-mix(in srgb, var(--cc-blue) 50%, white); }
+	:root:not([data-theme="light"]) .cc-well-body a,
+	:root:not([data-theme="light"]) .cc-breadcrumbs a,
+	:root:not([data-theme="light"]) .cc-news-all,
+	:root:not([data-theme="light"]) .cc-day,
+	:root:not([data-theme="light"]) .cc-main .icons .btn,
+	:root:not([data-theme="light"]) .cc-main .icons .dropdown-menu > li > a,
+	:root:not([data-theme="light"]) .cc-main .pagination li > a,
+	:root:not([data-theme="light"]) .cc-main ul.pager a,
+	:root:not([data-theme="light"]) .cc-main ul.pagenav a { color: color-mix(in srgb, var(--cc-blue) 50%, white); }
 }
+
+:root[data-theme="dark"] {
+	--cc-ink:   #e9edf2;
+	--cc-muted: #b4bdc7;
+	--cc-meta:  #8d99a6;
+	--cc-line:  #333c46;
+	--cc-line-2:#2b333c;
+	--cc-paper: #1b2128;
+	--cc-bg:    #14181d;
+	--cc-card:  #1f262e;
+}
+:root[data-theme="dark"] .cc-card,
+:root[data-theme="dark"] .cc-side .cc-well,
+:root[data-theme="dark"] .cc-news-list { box-shadow: 0 1px 3px rgba(0,0,0,.45); }
+:root[data-theme="dark"] .cc-card:hover { box-shadow: 0 10px 28px rgba(0,0,0,.5); }
+:root[data-theme="dark"] .cc-main a,
+:root[data-theme="dark"] .cc-card-link,
+:root[data-theme="dark"] .cc-notice a { color: color-mix(in srgb, var(--cc-red) 55%, white); }
+:root[data-theme="dark"] .cc-main a:hover { color: color-mix(in srgb, var(--cc-red) 40%, white); }
+:root[data-theme="dark"] .cc-well-body a,
+:root[data-theme="dark"] .cc-breadcrumbs a,
+:root[data-theme="dark"] .cc-news-all,
+:root[data-theme="dark"] .cc-day,
+:root[data-theme="dark"] .cc-main .icons .btn,
+:root[data-theme="dark"] .cc-main .icons .dropdown-menu > li > a,
+:root[data-theme="dark"] .cc-main .pagination li > a,
+:root[data-theme="dark"] .cc-main ul.pager a,
+:root[data-theme="dark"] .cc-main ul.pagenav a { color: color-mix(in srgb, var(--cc-blue) 50%, white); }
+
+/* Footer light/dark toggle */
+.cc-theme-toggle {
+	display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px;
+	border-radius: 50%; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.06);
+	color: #cfdae6; cursor: pointer; padding: 0; flex: none; transition: background .2s, color .2s;
+}
+.cc-theme-toggle:hover { background: rgba(255,255,255,.16); color: #fff; }
+.cc-theme-toggle .cc-theme-icon--moon { display: none; }
+.cc-theme-toggle[aria-pressed="true"] .cc-theme-icon--sun { display: none; }
+.cc-theme-toggle[aria-pressed="true"] .cc-theme-icon--moon { display: inline-flex; }
 
 /* ============================================================
    Print — strip site chrome and print the page's content cleanly in black on
