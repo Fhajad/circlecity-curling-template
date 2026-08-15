@@ -6,7 +6,7 @@
 	<authorEmail>info@circlecitycurling.com</authorEmail>
 	<copyright>Circle City Curling Club</copyright>
 	<license>GNU GPL v2 or later</license>
-	<version>1.4.1</version>
+	<version>1.4.2</version>
 	<description>Circle City Curling — front-end template. The home scroller and News list are driven entirely by Joomla Articles + modules (no HTML editing). Logo, brand colours and key text are set from the template Options panel.</description>
 
 	<updateservers>
