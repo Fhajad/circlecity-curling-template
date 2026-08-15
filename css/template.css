@@ -64,8 +64,8 @@ body.cc-site {
 .cc-logo-sm { width: 42px; height: 42px; }
 
 /* Uploaded logo image (Options -> Branding). Sized to the roundel's box. */
-.cc-logo-img { height: 54px; width: auto; max-height: 54px; flex: none; display: block; }
-.cc-logo-img.cc-logo-sm { height: 42px; max-height: 42px; width: auto; }
+.cc-logo-img { height: 84px; width: auto; max-height: 84px; flex: none; display: block; }
+.cc-logo-img.cc-logo-sm { height: 60px; max-height: 60px; width: auto; }
 
 /* ---------- Header ---------- */
 .cc-header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 18px; padding-bottom: 18px; }
